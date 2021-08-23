@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Character" representedClassName="Character" syncable="YES" codeGenerationType="class">
+        <attribute name="birth_year" optional="YES" attributeType="String"/>
+        <attribute name="gender" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="film" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Film" inverseName="characters" inverseEntity="Film"/>
+    </entity>
+    <entity name="Film" representedClassName="Film" syncable="YES" codeGenerationType="class">
+        <attribute name="director" optional="YES" attributeType="String"/>
+        <attribute name="episode_id" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="image_data" optional="YES" attributeType="Binary"/>
+        <attribute name="opening_crawl" optional="YES" attributeType="String"/>
+        <attribute name="producer" optional="YES" attributeType="String"/>
+        <attribute name="release_date" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="characters" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Character" inverseName="film" inverseEntity="Character"/>
+    </entity>
+    <elements>
+        <element name="Character" positionX="-54" positionY="-9" width="128" height="89"/>
+        <element name="Film" positionX="-63" positionY="-18" width="128" height="149"/>
+    </elements>
+</model>
