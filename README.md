@@ -43,7 +43,9 @@ The custom network layer is a critical component of the app's architecture. It h
 ### UI Design
 ![Local Image](Images/Switch.png)
 
-UICollectionView and UICollectionViewCompositionalLayout
+
+
+### UICollectionView and UICollectionViewCompositionalLayout
 One of the key features of our app is the use of UICollectionView along with UICollectionViewCompositionalLayout. This combination allows us to efficiently display news articles in a scrollable, grid-like format, enhancing the user's ability to explore a variety of articles easily.
 
 UICollectionViewCompositionalLayout: UICollectionViewCompositionalLayout empowers us to create dynamic and visually pleasing grid layouts that automatically adjust based on the available screen space. It ensures that our app's UI looks and functions optimally on both iPhone and iPad devices.
@@ -55,6 +57,8 @@ To streamline the UI design process and maintain a modular codebase, we make ext
 ### Testing
 
 Dependency injection facilitates unit testing by enabling us to provide mock or stub dependencies when creating ViewModel instances. This way, we can isolate specific parts of our ViewModel for testing, ensuring that it behaves as expected in isolation.
+
+InMemory Coredata stack is being used to execute the unit tests 
 
 
 ### Offline Persistence
