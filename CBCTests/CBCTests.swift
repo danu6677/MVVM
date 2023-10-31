@@ -26,7 +26,7 @@ final class CBCTests: XCTestCase {
         viewModel.fetchNews(completion: { (result) in
             switch result {
             case .success():
-                //Total Film count is 4 in mockFilmService
+                //Total news count is not nill in mockFilmService
                 XCTAssertNotNil(self.viewModel.newsData.count)
             case .failure(let error):
                 XCTAssertFalse(error.localizedDescription == AlertMerssage.UNKNOWN_ERROR_MESSAGE)
@@ -57,7 +57,7 @@ final class CBCTests: XCTestCase {
         viewModel.fetchNews(completion: { (result) in
             switch result {
             case .success():
-                //Total Film count is 4 in mockFilmService
+                //Total News count is 4 in mockFilmService
                 XCTAssertEqual(self.viewModel.newsData.count,4)
                 
             case .failure(let error):

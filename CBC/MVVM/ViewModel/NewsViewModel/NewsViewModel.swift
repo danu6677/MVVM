@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CoreData
 
 final class NewsViewModel {
     
@@ -61,7 +60,7 @@ final class NewsViewModel {
     //Fetch the Data from DB and if empty fetch from the API
     private func fetchFromCoreDataThenAPI(completion: @escaping (Result<Void, Error>) -> Void) {
         do{
-            try CoreDataManager(coreDataStack: _coreDataStack).fetchData(entity: Entity.NEWS, model: News.self, completion: {[weak self](result: [NSManagedObject]?) in
+            try CoreDataManager(coreDataStack: _coreDataStack).fetchData(entity: Entity.NEWS, model: News.self, completion: {[weak self](result) in
                 
                 guard let self = self else { return }
                 guard let finalResults = result as? [News] else {return}
