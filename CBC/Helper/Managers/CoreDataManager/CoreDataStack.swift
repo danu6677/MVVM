@@ -10,7 +10,7 @@ import CoreData
 class BaseCoreDataStack: CoreDataStackProtocol {
     var privateContext: NSManagedObjectContext
     var persistentContainer: NSPersistentContainer
-
+    
     init(containerName: String) {
         persistentContainer = NSPersistentContainer(name: containerName)
         persistentContainer.loadPersistentStores { (_, error) in
@@ -18,7 +18,7 @@ class BaseCoreDataStack: CoreDataStackProtocol {
                 fatalError("\(AlertMerssage.CORE_DATA_ERROR): \(error), \(error.userInfo)")
             }
         }
-
+        
         let _privateContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         _privateContext.parent = persistentContainer.viewContext
         privateContext = _privateContext
@@ -31,12 +31,27 @@ final class CoreDataStack: BaseCoreDataStack {
     }
 }
 
-//MARK: Test stack uses an in-memory Core Data store for testing, which is isolated from the actual production data.
+//MARK: Test stack could use an in-memory Core Data store or fileURLWithPath for testing, which is isolated from the actual production data.
 final class TestCoreDataStack: BaseCoreDataStack {
-    init() {
+    let description = NSPersistentStoreDescription()
+    init(type: DescriptionType) {
         super.init(containerName: Constants.CBC)
-        let description = NSPersistentStoreDescription()
-        description.type = NSInMemoryStoreType
+        setupCustomDescription(type: type)
+    }
+    
+    
+    fileprivate func setupCustomDescription(type: DescriptionType) {
+        switch type {
+        case .inMemory:
+            description.type = NSInMemoryStoreType
+        case .fileURL:
+            description.url = URL(fileURLWithPath: "/dev/null")
+        }
         persistentContainer.persistentStoreDescriptions = [description]
     }
+}
+
+enum DescriptionType {
+    case inMemory
+    case fileURL
 }

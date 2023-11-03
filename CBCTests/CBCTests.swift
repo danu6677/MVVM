@@ -16,7 +16,7 @@ final class CBCTests: XCTestCase {
     
     override func setUp() {
         mockNewsService = MockNewsService()
-        testCoreDataStack = TestCoreDataStack()
+        testCoreDataStack = TestCoreDataStack(type: .fileURL)
         viewModel = .init(coreDataStack: testCoreDataStack,newsService: mockNewsService)
         
     }
