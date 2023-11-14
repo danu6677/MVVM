@@ -20,6 +20,12 @@ final class CBCTests: XCTestCase {
         viewModel = .init(coreDataStack: testCoreDataStack,newsService: mockNewsService)
         
     }
+    override func tearDown() {
+        viewModel = nil
+        mockNewsService = nil
+        testCoreDataStack = nil
+        super.tearDown()
+    }
     
     //Test if the data returned is not nil
     func testIfNewsReturned()  {

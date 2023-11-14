@@ -7,13 +7,9 @@
 
 import Foundation
 
-struct NewsModel:Codable {
-    let id: Int?
-    let title: String?
-    let description: String?
-    let source: String?
-    let publishedAt: Int?
-    let type: String?
+struct NewsModel:Codable,Identifiable {
+    let id,publishedAt: Int?
+    let title,description,source,type: String?
     let images:ImageURL?
     let imageData:Data?
 }

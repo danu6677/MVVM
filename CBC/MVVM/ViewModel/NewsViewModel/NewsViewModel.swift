@@ -70,10 +70,10 @@ final class NewsViewModel {
                 }else{
                     let data = finalResults.map({news in
                         NewsModel(id: Int(news.news_id),
+                                  publishedAt: Int(news.publishedAt),
                                   title: news.title,
                                   description: news.news_description,
                                   source: news.source,
-                                  publishedAt: Int(news.publishedAt),
                                   type: news.news_type,
                                   images: nil,
                                   imageData: news.image_data)
