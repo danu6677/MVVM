@@ -91,15 +91,15 @@ extension CoreDataManager {
                 news_entity.news_type = news.type
                 news_entity.news_description = news.description
                 news_entity.publishedAt = Int64(news.publishedAt ?? 0)
-                news.images?.square_140?.loadDataFromURL{ data in
-                    if let imageData = data {
-                        news_entity.image_data = imageData
-                    }
+                
+                if let imageData = news.images?.square_140?.synchronousLoadDataFromURL(){
+                    news_entity.image_data = imageData
                 }
                 
                 self.privateMOC.insert(news_entity)
-                self.synchronize(privateMOC: self.privateMOC)
+                
             }
+            self.synchronize(privateMOC: self.privateMOC)
         }
     }
 }

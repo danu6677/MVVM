@@ -8,25 +8,27 @@
 import Foundation
 
 extension String {
-    func loadDataFromURL(completion: @escaping (Data?) -> Void) {
-        // Check if the string can be converted to a URL
+    
+    func synchronousLoadDataFromURL(timeout: TimeInterval = 10.0) -> Data? {
         guard let url = URL(string: self) else {
-            completion(nil)
-            return
+            return nil
         }
         
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                // Handle the error
-                print("Error: \(error.localizedDescription)")
-                completion(nil)
-            } else if let data = data {
-                // Data loaded successfully
-                completion(data)
-            }
+        var resultData: Data?
+        let semaphore = DispatchSemaphore(value: 0)
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            defer { semaphore.signal() }
             
-        }
-        task.resume()
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            } else if let data = data {
+                resultData = data
+            }
+        }.resume()
+        
+        let _ = semaphore.wait(timeout: .now() + timeout)
+        return resultData
     }
     
 }
