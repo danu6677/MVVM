@@ -92,10 +92,11 @@ extension CoreDataManager {
                 news_entity.news_description = news.description
                 news_entity.publishedAt = Int64(news.publishedAt ?? 0)
                 
-                if let imageData = news.images?.square_140?.synchronousLoadDataFromURL(){
+                //Shortcut to download the image in a synchronous manner
+                if let imageURL = URL(string: news.images?.square_140 ?? ""),
+                   let imageData = try? Data(contentsOf: imageURL) {
                     news_entity.image_data = imageData
                 }
-                
                 self.privateMOC.insert(news_entity)
                 
             }

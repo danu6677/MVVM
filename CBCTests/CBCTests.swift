@@ -71,4 +71,25 @@ final class CBCTests: XCTestCase {
             }
         })
     }
+    
+    //This is the way to test an asyc task
+    func testIfAsycTaskReturned() {
+        //MARK: Async tasks can be tested with "XCTestExpectation" 
+        let expectation = XCTestExpectation(description: "News data fetched successfully")
+        
+        let url = URL(string: "https://i.cbc.ca/1.6987746.1697246245!/fileImage/httpImage/image.JPG_gen/derivatives/16x9tight_140/trudeau-housing-20231005.JPG")!
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data, error == nil else { return }
+                
+            if !data.isEmpty {
+                expectation.fulfill()
+            }
+        }
+            
+        task.resume()
+        wait(for: [expectation], timeout: 10)
+        
+    }
+
 }
