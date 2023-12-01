@@ -17,8 +17,8 @@ final class CBCTests: XCTestCase {
     override func setUp() {
         mockNewsService = MockNewsService()
         testCoreDataStack = TestCoreDataStack(type: .fileURL)
-        viewModel = .init(coreDataStack: testCoreDataStack,newsService: mockNewsService)
-        
+        viewModel = NewsViewModel(coreDataStack: testCoreDataStack, newsService: mockNewsService)
+
     }
     override func tearDown() {
         viewModel = nil
@@ -73,23 +73,19 @@ final class CBCTests: XCTestCase {
     }
     
     //This is the way to test an asyc task
-    func testIfAsycTaskReturned() {
+    func testAsycimageDownload() async {
         //MARK: Async tasks can be tested with "XCTestExpectation" 
-        let expectation = XCTestExpectation(description: "News data fetched successfully")
+        let expectation = XCTestExpectation(description: "News image data fetched successfully")
         
-        let url = URL(string: "https://i.cbc.ca/1.6987746.1697246245!/fileImage/httpImage/image.JPG_gen/derivatives/16x9tight_140/trudeau-housing-20231005.JPG")!
+        let url =  "https://i.cbc.ca/1.6987746.1697246245!/fileImage/httpImage/image.JPG_gen/derivatives/16x9tight_140/trudeau-housing-20231005.JPG"
         
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                guard let data = data, error == nil else { return }
-                
-            if !data.isEmpty {
+        let _ = url.asyncDownloadFromUrlString(completion: { data in
                 expectation.fulfill()
-            }
-        }
             
-        task.resume()
-        wait(for: [expectation], timeout: 10)
+        })
         
+
+        await fulfillment(of: [expectation], timeout: 10)
     }
 
 }
